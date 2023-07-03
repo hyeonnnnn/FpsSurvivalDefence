@@ -57,6 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Hand.cs" />
+    <Compile Include="Assets\Scripts\HandController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Assets\Water Shaders\Water_Shader.shader" />
