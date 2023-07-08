@@ -25,6 +25,10 @@ public class AxeController : CloseWeaponController // CloseWeaponController 상속
         {
             if (checkObject())
             {
+                if (hitInfo.transform.tag == "Rock") // 바위와 부딪히면
+                {
+                    hitInfo.transform.GetComponent<Rock>().Mining();
+                }
                 isSwing = false;
                 Debug.Log(hitInfo.transform.name); // 충돌체의 이름 출력
             }
