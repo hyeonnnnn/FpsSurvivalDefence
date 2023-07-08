@@ -36,7 +36,7 @@ public abstract class CloseWeaponController : MonoBehaviour
 
         // 휘두른 순간에만 적중되어야 함
         isSwing = true;
-        HitCoroutine(); // 적중시키는 코루틴
+        StartCoroutine(HitCoroutine()); // 적중시키는 코루틴
         yield return new WaitForSeconds(currentCloseWeapon.attackDelayB);
         isSwing = false;
 

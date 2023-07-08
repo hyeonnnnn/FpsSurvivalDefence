@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody myRigid;
     private GunController theGunController;
     private Crosshair theCrosshair;
+    private StatusController theStatusController;
 
     // Start is called before the first frame update
     void Start()
@@ -58,7 +59,7 @@ public class PlayerController : MonoBehaviour
         myRigid = GetComponent<Rigidbody>();
         theGunController = FindObjectOfType<GunController>(); // 하이어라키에 있는, GunController 있는 객체 찾기
         theCrosshair = FindObjectOfType<Crosshair>();
-        // WeaponManager.isChangeWeapon = true; isChangeWeapon(static)을 참조, 변경 둘 다 가능
+        theStatusController = FindObjectOfType<StatusController>();
 
         //초기화
         applySpeed = walkSpeed; // 달리기 전에 걷기 (기본값)
@@ -145,7 +146,7 @@ public class PlayerController : MonoBehaviour
     // 점프 시도
     private void TryJump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isGround) 
+        if (Input.GetKeyDown(KeyCode.Space) && isGround && theStatusController.GetCurrentSP() > 0) 
         {
             Jump();
         }
@@ -156,18 +157,18 @@ public class PlayerController : MonoBehaviour
     {
         if (isCrouch) // 앉기 -> 점프 -> 앉은 상태 해제
             Crouch();
-
+        theStatusController.DecreaseStamina(100);
         myRigid.velocity = transform.up * jumpForce;
     }
 
     // 달리기 시도
     private void TryRun()
     {
-        if(Input.GetKey(KeyCode.LeftShift)) // 키 누를 때
+        if(Input.GetKey(KeyCode.LeftShift) && theStatusController.GetCurrentSP() > 0) // 키 누를 때
         {
             Running();
         }
-        if(Input.GetKeyUp(KeyCode.LeftShift)) // 키에서 뗄 때
+        if(Input.GetKeyUp(KeyCode.LeftShift) || theStatusController.GetCurrentSP() <= 0) // 키에서 뗄 때
         {
             RunningCancle();
         }
@@ -183,6 +184,7 @@ public class PlayerController : MonoBehaviour
 
         isRun = true;
         theCrosshair.RunningAnimation(isRun);
+        theStatusController.DecreaseStamina(2);
         applySpeed = runSpeed; // 달리기 속도로 바꾸기
     }
 

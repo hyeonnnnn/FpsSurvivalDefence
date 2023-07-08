@@ -62,13 +62,14 @@
     <Compile Include="Assets\Scripts\HUD.cs" />
     <Compile Include="Assets\Scripts\CloseWeapon.cs" />
     <Compile Include="Assets\Scripts\WeaponManager.cs" />
+    <Compile Include="Assets\Scripts\Rock.cs" />
     <Compile Include="Assets\Scripts\HandController.cs" />
+    <Compile Include="Assets\Scripts\SoundManager.cs" />
     <Compile Include="Assets\Scripts\GunController.cs" />
     <Compile Include="Assets\Scripts\Gun.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\AxeController.cs" />
-    <Compile Include="Assets\Scripts\Rock.cs" />
-    <Compile Include="Assets\Scripts\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\StatusController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

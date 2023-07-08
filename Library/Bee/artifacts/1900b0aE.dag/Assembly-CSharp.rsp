@@ -356,6 +356,7 @@
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/Rock.cs"
 "Assets/Scripts/SoundManager.cs"
+"Assets/Scripts/UI Scripts/StatusController.cs"
 "Assets/Scripts/WeaponManager.cs"
 "Assets/Scripts/WeaponSway.cs"
 -langversion:9.0

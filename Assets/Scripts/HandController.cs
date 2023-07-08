@@ -20,7 +20,6 @@ public class HandController : CloseWeaponController // CloseWeaponController 상�
             if (checkObject())
             {
                 isSwing = false;
-                Debug.Log(hitInfo.transform.name); // 충돌체의 이름 출력
             }
             yield return null;
         }

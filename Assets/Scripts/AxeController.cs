@@ -30,7 +30,6 @@ public class AxeController : CloseWeaponController // CloseWeaponController 상속
                     hitInfo.transform.GetComponent<Rock>().Mining();
                 }
                 isSwing = false;
-                Debug.Log(hitInfo.transform.name); // 충돌체의 이름 출력
             }
             yield return null;
         }
