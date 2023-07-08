@@ -18,9 +18,13 @@ public class PlayerController : MonoBehaviour
     private float jumpForce;
 
     // 상태 변수
-    private bool isRun = false; // 걷는지 뛰는지 구분
+    private bool isWalk = false; // 걷고 있는지 아닌지 구분
+    private bool isRun = false; // 뛰고 있는지 아닌지 구분
     private bool isCrouch = false; // 앉아있는지 아닌지 구분
     private bool isGround = true; // 땅에 있는지 아닌지 구분
+
+    // 움직임 체크 변수
+    private Vector3 lastPos; // 전 프레임의 현재 위치
 
     // 얼마나 앉을지 결정하는 변수
     [SerializeField]
@@ -43,17 +47,21 @@ public class PlayerController : MonoBehaviour
     // 필요한 컴포넌트
     [SerializeField]
     private Camera theCamera;
-
     private Rigidbody myRigid;
+    private GunController theGunController;
+    private Crosshair theCrosshair;
 
     // Start is called before the first frame update
     void Start()
     {
         capsuleCollider = GetComponent<CapsuleCollider>();
         myRigid = GetComponent<Rigidbody>();
-        applySpeed = walkSpeed; // 달리기 전에 걷기 (기본값)
+        theGunController = FindObjectOfType<GunController>(); // 하이어라키에 있는, GunController 있는 객체 찾기
+        theCrosshair = FindObjectOfType<Crosshair>();
+        // WeaponManager.isChangeWeapon = true; isChangeWeapon(static)을 참조, 변경 둘 다 가능
 
         //초기화
+        applySpeed = walkSpeed; // 달리기 전에 걷기 (기본값)
         originPosY = theCamera.transform.localPosition.y; // 카메라 위치 변경, 로컬좌표 사용
         applyCrouchPosY = originPosY; // 앉기 전에 원래 위치 (기본값)
     }
@@ -70,6 +78,11 @@ public class PlayerController : MonoBehaviour
         CharacterRotation();
     }
 
+    private void FixedUpdate()
+    {
+        MoveCheck(); // 업데이트 간격이 여유로워짐
+    }
+
     // 앉기 시도
     private void TryCrouch()
     {
@@ -83,8 +96,9 @@ public class PlayerController : MonoBehaviour
     private void Crouch()
     {
         isCrouch = !isCrouch; // 스위치역할. isCrouch가 true면 false로, false면 true로
+        theCrosshair.CrouchingAnimation(isCrouch);
 
-        if(isCrouch) // 앉았을 때
+        if (isCrouch) // 앉았을 때
         {
             applySpeed = crouchSpeed;
             applyCrouchPosY = crouchPosY;
@@ -122,9 +136,10 @@ public class PlayerController : MonoBehaviour
     // 지면 체크
     private void IsGround()
     {
-        isGround = Physics.Raycast(transform.position, Vector3.down, capsuleCollider.bounds.extents.y + 0.1f); // Vector3.down 대신 -transform.up 사용하지 X 
+        isGround = Physics.Raycast(transform.position, Vector3.down, capsuleCollider.bounds.extents.y + 0.2f); // Vector3.down 대신 -transform.up 사용하지 X 
                                                                                                                // capsuleCollider.bounds.extents.y : 캡슐 콜라이더 y 값의 절반 크기만큼 레이저
                                                                                                                // + 0.1f : 경사면에 있을 때 대비
+        theCrosshair.JumpAnimation(!isGround);
     }
 
     // 점프 시도
@@ -164,7 +179,10 @@ public class PlayerController : MonoBehaviour
         if (isCrouch) // 달리기 -> 점프 -> 달리는 상태 해제
             Crouch();
 
+        theGunController.CancelFineSight(); // 뛸 때 정조준 모드 해제
+
         isRun = true;
+        theCrosshair.RunningAnimation(isRun);
         applySpeed = runSpeed; // 달리기 속도로 바꾸기
     }
 
@@ -172,6 +190,7 @@ public class PlayerController : MonoBehaviour
     private void RunningCancle()
     {
         isRun = false;
+        theCrosshair.RunningAnimation(isRun);
         applySpeed = walkSpeed; // 걷기 속도로 바꾸기
     }
 
@@ -187,6 +206,22 @@ public class PlayerController : MonoBehaviour
         Vector3 _velocity = (_moveHorizontal + _moveVertical).normalized * applySpeed; // (1, 0, 1) = 2 -> (0.5, 0, 0.5) = 1 
                                                                                        // 1이 나오도록 정규화
         myRigid.MovePosition(transform.position + _velocity * Time.deltaTime); // Time.deltaTime 없으면 순간이동하듯이
+    }
+
+    // 움직임 체크
+    private void MoveCheck()
+    {
+        // 달리지 않을 때, 움크리고 있지 않을 때, 땅에 있을 때만 걷고 있는지 여부 체크
+        if (!isRun && !isCrouch && isGround)
+        {
+            if (Vector3.Distance(lastPos, transform.position) >= 0.01f) // 경사면에서는 가만히 있어도 미끄러기 때문에 이를 방지
+                isWalk = true;
+            else
+                isWalk = false;
+
+            theCrosshair.WalkingAnimation(isWalk);
+            lastPos = transform.position;
+        }
     }
 
     // 카메라 상하 회전
