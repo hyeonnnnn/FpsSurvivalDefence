@@ -33,7 +33,9 @@ public class WeaponSway : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        TrySway();
+        // 인벤토리가 활성화되면 스웨이 가만히
+        if(Inventory.inventoryActivated == false)
+            TrySway();
     }
 
     private void TrySway()

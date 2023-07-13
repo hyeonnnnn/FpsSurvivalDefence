@@ -18,11 +18,15 @@ public abstract class CloseWeaponController : MonoBehaviour
 
     protected void TryAttack()
     {
-        if (Input.GetButton("Fire1")) // 좌클릭하면
+        // 인벤토리가 활성화되면 공격 불가능
+        if(Inventory.inventoryActivated == false)
         {
-            if (!isAttack)
+            if (Input.GetButton("Fire1")) // 좌클릭하면
             {
-                StartCoroutine(AttackCoroutine()); // 공격하는 코루틴 실행
+                if (!isAttack)
+                {
+                    StartCoroutine(AttackCoroutine()); // 공격하는 코루틴 실행
+                }
             }
         }
     }

@@ -75,8 +75,13 @@ public class PlayerController : MonoBehaviour
         TryRun();
         TryCrouch();
         Move();
-        CameraRotation();
-        CharacterRotation();
+        MoveCheck();
+        // 인벤토리가 활성화되면 카메라, 캐릭터를 가만히
+        if (Inventory.inventoryActivated == false)
+        {
+            CameraRotation();
+            CharacterRotation();
+        }
     }
 
     private void FixedUpdate()
