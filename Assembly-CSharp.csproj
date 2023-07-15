@@ -61,23 +61,27 @@
     <Compile Include="Assets\Scripts\ItemPickUp.cs" />
     <Compile Include="Assets\Scripts\ActionController.cs" />
     <Compile Include="Assets\Scripts\WeaponSway.cs" />
+    <Compile Include="Assets\Scripts\ItemEffectDatabase.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\Inventory.cs" />
     <Compile Include="Assets\Scripts\Item.cs" />
+    <Compile Include="Assets\Scripts\NPC\Pig.cs" />
     <Compile Include="Assets\Scripts\HUD.cs" />
     <Compile Include="Assets\Scripts\CloseWeapon.cs" />
     <Compile Include="Assets\Scripts\WeaponManager.cs" />
     <Compile Include="Assets\Scripts\Rock.cs" />
     <Compile Include="Assets\Scripts\HandController.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\DragSlot.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\Slot.cs" />
     <Compile Include="Assets\Scripts\SoundManager.cs" />
+    <Compile Include="Assets\Scripts\UI Scripts\SlotToolTip.cs" />
     <Compile Include="Assets\Scripts\GunController.cs" />
     <Compile Include="Assets\Scripts\Gun.cs" />
     <Compile Include="Assets\Scripts\UI Scripts\StatusController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\AxeController.cs" />
-    <Compile Include="Assets\Scripts\UI Scripts\DragSlot.cs" />
-    <Compile Include="Assets\Scripts\ItemEffectDatabase.cs" />
-    <Compile Include="Assets\Scripts\UI Scripts\SlotToolTip.cs" />
+    <Compile Include="Assets\Scripts\NPC\FieldOfViewAngle.cs" />
+    <Compile Include="Assets\Scripts\NPC\Animal.cs" />
+    <Compile Include="Assets\Scripts\NPC\WeakAnimal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

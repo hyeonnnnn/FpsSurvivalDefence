@@ -25,10 +25,15 @@ public class AxeController : CloseWeaponController // CloseWeaponController 상속
         {
             if (checkObject())
             {
-                if (hitInfo.transform.tag == "Rock") // 바위와 부딪히면
-                {
+                if (hitInfo.transform.tag == "Rock") // 바위를 때리면
                     hitInfo.transform.GetComponent<Rock>().Mining();
+                
+                else if (hitInfo.transform.tag == "WeakAnimal") // WeakAnimal을 때리면
+                {
+                    SoundManager.instance.PlaySE("Animal_Hit");
+                    hitInfo.transform.GetComponent<WeakAnimal>().Damage(1, transform.position);
                 }
+
                 isSwing = false;
             }
             yield return null;

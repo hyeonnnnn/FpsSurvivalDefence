@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -27,6 +28,9 @@ public class GunController : MonoBehaviour
 
     // 레이저 충돌 정보 가져옴
     private RaycastHit hitinfo;
+
+    [SerializeField]
+    protected LayerMask layerMask;
 
     // 필요한 컴포넌트
     [SerializeField]
@@ -114,7 +118,8 @@ public class GunController : MonoBehaviour
             new Vector3(Random.Range(-theCrosshair.GetAccuarcy() - currentGun.accuracy, theCrosshair.GetAccuarcy() - currentGun.accuracy),
                         Random.Range(-theCrosshair.GetAccuarcy() - currentGun.accuracy, theCrosshair.GetAccuarcy() - currentGun.accuracy),
                         0) // 나아가는 방향은 항상 1
-            , out hitinfo, currentGun.range))
+            , out hitinfo, currentGun.range
+            , layerMask))
         {
             GameObject clone = Instantiate(hit_effect_prefab, hitinfo.point, Quaternion.LookRotation(hitinfo.normal)); // 충돌한 객체의 표면이 바라보는 방향으로 생성
             Destroy(clone, 2f); // 2초 후에 삭제

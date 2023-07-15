@@ -15,6 +15,8 @@ public abstract class CloseWeaponController : MonoBehaviour
     protected bool isSwing = false;
 
     protected RaycastHit hitInfo;
+    [SerializeField]
+    protected LayerMask layerMask; // 플레이어(자기자신)와의 충돌을 피하기 위해
 
     protected void TryAttack()
     {
@@ -55,7 +57,7 @@ public abstract class CloseWeaponController : MonoBehaviour
     {
         // 전방에 무엇이 있는지
         // 캐릭터의 위치에서, 정면으로, 충돌체가 있다면 충돌체의 정보를 hitInfo에서, 손 범위만큼 레이저
-        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, currentCloseWeapon.range))
+        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, currentCloseWeapon.range, layerMask))
         {
             return true;
         }
